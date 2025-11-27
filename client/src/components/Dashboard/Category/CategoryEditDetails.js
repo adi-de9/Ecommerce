@@ -128,7 +128,7 @@ function CategoryEditDetails({ id, edit }) {
                 <h1 className="w-full">
                   {categoryData.image.public_id
                     ? categoryData.image.public_id
-                    : productData.imageName}
+                    : categoryData.imageName}
                 </h1>
                 <button
                   onClick={handleClearImage}

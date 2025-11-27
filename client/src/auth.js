@@ -7,10 +7,11 @@ export const AuthProvider = ({ children }) => {
     return localStorage.setItem('token', servertoken);
   };
 
-  return;
-  <AuthContext.Provider value={{ servertokenINS }}>
-    {children}
-  </AuthContext.Provider>;
+  return (
+    <AuthContext.Provider value={{ servertokenINS }}>
+      {children}
+    </AuthContext.Provider>
+  );
 };
 
 export const useAuth = () => {};

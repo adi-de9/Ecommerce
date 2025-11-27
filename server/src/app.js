@@ -26,6 +26,7 @@ import useragent from 'express-useragent';
 
 // constants
 const app = express();
+console.log(process.env.CORS_ORIGIN, process.env.MONGO_URI);
 // stripe checkout webhook
 app.use(`${BASEPATH}/payment`, stripeWebhookRoutes);
 

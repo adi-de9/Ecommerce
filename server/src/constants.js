@@ -38,6 +38,7 @@ export const allowedImgExtensions = {
   png: '.png',
   jpeg: '.jpeg',
   webp: '.webp',
+  avif: '.avif',
 };
 export const allowedImgExtensionsEnum = Object.values(allowedImgExtensions);
 export const orderStatusEnum = Object.values(orderStatus);
