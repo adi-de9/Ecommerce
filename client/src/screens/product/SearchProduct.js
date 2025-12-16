@@ -1,6 +1,6 @@
 import React from 'react';
 // import CategoryPage from '../../components/Home/CategoryCard';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 function SearchProduct() {
   const { query } = useParams();

@@ -1,0 +1,227 @@
+/* Carousel Container Styles */
+.carousel-container {
+  position: relative;
+  font-family: 'Inter', sans-serif;
+}
+
+/* Slide Animations */
+@keyframes slideInRight {
+  from {
+    transform: translateX(100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes slideInLeft {
+  from {
+    transform: translateX(-100%);
+    opacity: 0;
+  }
+  to {
+    transform: translateX(0);
+    opacity: 1;
+  }
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes fadeInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+/* Animation Classes */
+.animate-slideInRight {
+  animation: slideInRight 0.7s ease-out forwards;
+}
+
+.animate-slideInLeft {
+  animation: slideInLeft 0.7s ease-out forwards;
+}
+
+.animate-fadeIn {
+  animation: fadeIn 0.6s ease-out forwards;
+}
+
+.animate-fadeInUp {
+  animation: fadeInUp 0.8s ease-out forwards;
+}
+
+.animate-fadeInDown {
+  animation: fadeInDown 0.8s ease-out forwards;
+}
+
+.animate-scaleIn {
+  animation: scaleIn 0.6s ease-out forwards;
+}
+
+/* Animation Delays */
+.animation-delay-200 {
+  animation-delay: 0.2s;
+  opacity: 0;
+}
+
+.animation-delay-400 {
+  animation-delay: 0.4s;
+  opacity: 0;
+}
+
+.animation-delay-600 {
+  animation-delay: 0.6s;
+  opacity: 0;
+}
+
+.animation-delay-800 {
+  animation-delay: 0.8s;
+  opacity: 0;
+}
+
+/* Carousel Slide Transition */
+.carousel-slide {
+  transition: opacity 0.7s ease-in-out, transform 0.7s ease-in-out;
+}
+
+.carousel-slide-active {
+  z-index: 10;
+}
+
+/* Image Zoom Effect */
+.carousel-slide-active img {
+  animation: subtleZoom 10s ease-in-out infinite alternate;
+}
+
+@keyframes subtleZoom {
+  from {
+    transform: scale(1);
+  }
+  to {
+    transform: scale(1.05);
+  }
+}
+
+/* Enhanced Button Hover Effects */
+.carousel-container button {
+  position: relative;
+  overflow: hidden;
+}
+
+.carousel-container button::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.3);
+  transform: translate(-50%, -50%);
+  transition: width 0.6s, height 0.6s;
+}
+
+.carousel-container button:hover::before {
+  width: 300px;
+  height: 300px;
+}
+
+/* Smooth Text Rendering */
+.carousel-container h1,
+.carousel-container h2,
+.carousel-container h5,
+.carousel-container p {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+/* Drop Shadow for Better Readability */
+.carousel-container h1 {
+  text-shadow: 0 4px 20px rgba(0, 0, 0, 0.8),
+               0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+.carousel-container h2 {
+  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.6);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .animate-fadeInUp,
+  .animate-slideInLeft {
+    animation-duration: 0.6s;
+  }
+  
+  .carousel-container h1 {
+    font-size: 2rem;
+  }
+}
+
+/* Accessibility */
+@media (prefers-reduced-motion: reduce) {
+  .carousel-slide,
+  .animate-slideInRight,
+  .animate-slideInLeft,
+  .animate-fadeInUp,
+  .animate-fadeIn,
+  .animate-scaleIn {
+    animation: none;
+    transition: none;
+    opacity: 1;
+    transform: none;
+  }
+}
+
+/* Loading State */
+.carousel-container.loading {
+  min-height: 500px;
+  background: linear-gradient(90deg, #f0f0f0 25%, #e0e0e0 50%, #f0f0f0 75%);
+  background-size: 200% 100%;
+  animation: loading 1.5s ease-in-out infinite;
+}
+
+@keyframes loading {
+  0% {
+    background-position: 200% 0;
+  }
+  100% {
+    background-position: -200% 0;
+  }
+}

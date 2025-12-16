@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { IoSettingsSharp } from 'react-icons/io5';
 import OrderSettingDialog from './OrderSettingDialog';
 import { capitalizeFirstLetter } from '../Utils/Capitalize';

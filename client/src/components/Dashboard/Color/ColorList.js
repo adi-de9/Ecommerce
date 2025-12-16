@@ -10,7 +10,7 @@ function ColorList() {
 
   useEffect(() => {
     dispatch(getAllColor());
-  }, []);
+  }, [colors]);
 
   return (
     <>

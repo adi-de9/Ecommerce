@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import png from '../../../images/favicon.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearError, login } from '../../features/authSlice';
 import { toast } from 'react-toastify';

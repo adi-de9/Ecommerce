@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import {
   getSingleColor,
   updateColor,
@@ -94,8 +94,18 @@ function ColorEditDetails({ id, edit }) {
                 className="flex h-10 flex-1 items-center justify-start rounded-md border border-gray-400 px-2 py-2 text-base"
                 onChange={handleInputChange}
               />
+              {/* Color Picker */}
+              <input
+                type="color"
+                value={colorData.hexCode}
+                onChange={(e) =>
+                  setColorData((prev) => ({ ...prev, hexCode: e.target.value }))
+                }
+                className="h-10 w-10 cursor-pointer rounded-full"
+              />
+
               <div
-                className="mx-3 flex h-full w-20 cursor-pointer items-center justify-center rounded-md"
+                className="mx-3 flex h-full w-20 cursor-pointer items-center justify-center rounded-full"
                 style={{ backgroundColor: colorData.hexCode }}
               ></div>
             </div>

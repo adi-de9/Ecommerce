@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { IoSettingsSharp } from 'react-icons/io5';
 import ColorSettingDialog from './ColorSettingDialog';
 import { MdModeEditOutline } from 'react-icons/md';

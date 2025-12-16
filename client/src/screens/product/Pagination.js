@@ -11,13 +11,13 @@ const Pagination = ({ currentPage, totalPages, onPageChange, style }) => {
 
   return (
     <ol
-      className={`flex ${style?.position ? style.position : 'justify-center'} w-full space-x-1 p-2 text-xs font-medium`}
+      className={`flex ${style?.position ? style.position : 'justify-center'} dark:text-white w-full space-x-1 p-2 text-xs font-medium`}
     >
       <li>
         <button
           onClick={() => handlePageChange(currentPage - 1)}
           disabled={currentPage === 1}
-          className="inline-flex h-10 w-10 cursor-pointer  items-center justify-center rounded border border-gray-200"
+          className="inline-flex h-10 w-10 cursor-pointer items-center justify-center rounded border border-gray-200"
         >
           <IoIosArrowBack className="h-3 w-3" />
         </button>

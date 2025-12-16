@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import png from '../../../images/favicon.png';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { useDispatch, useSelector } from 'react-redux';
 import { clearError, resetPassword } from '../../features/authSlice';
 import { toast } from 'react-toastify';
 import InputBox from '../../utils/InputBox';
-import { useParams } from 'react-router-dom';
+import { useParams } from 'react-router';
 
 const ResetPassword = () => {
   const { token } = useParams();

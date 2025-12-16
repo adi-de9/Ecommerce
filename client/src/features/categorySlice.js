@@ -1,14 +1,13 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = process.env.BASEURL;
+const BASE_URL = import.meta.env.VITE_BASEURL;
 
 export const addCategory = createAsyncThunk(
   'category/addCategory',
   async ({ categoryData }, { rejectWithValue }) => {
     try {
       const response = await axios.post(`${BASE_URL}/category`, categoryData, {
-        headers: { 'Content-Type': 'multipart/form-data' },
         withCredentials: true,
       });
       return response.data;
@@ -27,7 +26,6 @@ export const updateCategory = createAsyncThunk(
         `${BASE_URL}/category/${id}`,
         categoryData,
         {
-          headers: { 'Content-Type': 'multipart/form-data' },
           withCredentials: true,
         }
       );

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { IoSettingsSharp } from 'react-icons/io5';
 import ProductSettingDialog from './ProductSettingDialog';
 import { MdModeEditOutline } from 'react-icons/md';
@@ -8,9 +8,11 @@ import { AiFillDelete } from 'react-icons/ai';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
 import { removeProduct } from '../../../features/productSlice';
+import ImagePreview from '../Utils/ImagePreview';
 
-function ProductListItem({ id, index, name, stock, price }) {
+function ProductListItem({ id, index, name, stock, price, image }) {
   const [isSettingDialog, setIsSettingDialog] = useState(false);
+  const [isPreviewVisible, setIsPreviewVisible] = useState(false);
   const { loading, SuccessMsg } = useSelector((state) => state.product);
   const discpatch = useDispatch();
 
@@ -43,6 +45,15 @@ function ProductListItem({ id, index, name, stock, price }) {
           >
             {name}
           </Link>
+        </div>
+
+        <div className="flex h-full w-36 items-center justify-center border-r px-2">
+          <img
+            src={image}
+            alt={name}
+            className="h-10 w-10 cursor-pointer rounded-full object-cover"
+            onClick={() => setIsPreviewVisible(true)}
+          />
         </div>
 
         <div className="flex h-full w-36 items-center justify-center border-r px-3 text-base">
@@ -83,6 +94,12 @@ function ProductListItem({ id, index, name, stock, price }) {
           id={id}
           title={name}
           onClose={() => setIsSettingDialog(false)}
+        />
+      )}
+      {isPreviewVisible && (
+        <ImagePreview
+          image={image}
+          onClose={() => setIsPreviewVisible(false)}
         />
       )}
     </>

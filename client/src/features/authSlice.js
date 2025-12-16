@@ -6,7 +6,7 @@ export const refreshToken = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${process.env.BASEURL}/auth/refreshToken`,
+        `${import.meta.env.VITE_BASEURL}/auth/refreshToken`,
         null,
         {
           withCredentials: true,
@@ -24,10 +24,13 @@ export const User = createAsyncThunk(
   'auth/User',
   async (_, { rejectWithValue }) => {
     try {
-      const response = await axios.get(`${process.env.BASEURL}/auth/user`, {
-        headers: { 'Content-Type': 'application/json' },
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${import.meta.env.VITE_BASEURL}/auth/user`,
+        {
+          headers: { 'Content-Type': 'application/json' },
+          withCredentials: true,
+        }
+      );
       return response.data;
     } catch (error) {
       const message = error.response?.data?.message || error.message;
@@ -41,7 +44,7 @@ export const logout = createAsyncThunk(
   async (_, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${process.env.BASEURL}/auth/logout`,
+        `${import.meta.env.VITE_BASEURL}/auth/logout`,
         {},
         {
           withCredentials: true,
@@ -60,7 +63,7 @@ export const login = createAsyncThunk(
   async ({ loginData }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${process.env.BASEURL}/auth/login`,
+        `${import.meta.env.VITE_BASEURL}/auth/login`,
         loginData,
         {
           withCredentials: true,
@@ -80,7 +83,7 @@ export const Register = createAsyncThunk(
   async ({ name, username, email, password }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${process.env.BASEURL}/auth/register`,
+        `${import.meta.env.VITE_BASEURL}/auth/register`,
         {
           name,
           username,
@@ -105,7 +108,7 @@ export const forgotPasswordLink = createAsyncThunk(
   async ({ forgotData }, { rejectWithValue }) => {
     try {
       const response = await axios.post(
-        `${process.env.BASEURL}/auth/forgotPassword`,
+        `${import.meta.env.VITE_BASEURL}/auth/forgotPassword`,
         forgotData,
         {
           withCredentials: true,
@@ -124,7 +127,7 @@ export const resetPassword = createAsyncThunk(
   async ({ resetData }, { rejectWithValue }) => {
     try {
       const response = await axios.put(
-        `${process.env.BASEURL}/auth/forgotPassword`,
+        `${import.meta.env.VITE_BASEURL}/auth/forgotPassword`,
         resetData,
         {
           withCredentials: true,

@@ -7,7 +7,7 @@ import {
 import { FaRegHeart } from 'react-icons/fa';
 import { FaHeart } from 'react-icons/fa';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 function WishlistBtn({ id, mode, isUserLogin }) {
   const dispatch = useDispatch();
@@ -56,14 +56,16 @@ function WishlistBtn({ id, mode, isUserLogin }) {
   }
 
   return (
-    <>
-      <div
-        onClick={handleOnClick}
-        className={`${style} flex h-11 w-11 cursor-pointer items-center justify-center bg-black text-xl text-white shadow-md transition duration-1000 hover:bg-opacity-80`}
-      >
-        {added ? <FaHeart style={{ color: 'red' }} /> : <FaRegHeart />}
-      </div>
-    </>
+    <div
+      onClick={handleOnClick}
+      className={`${style} group/wishlist flex h-10 w-10 cursor-pointer items-center justify-center bg-white/90 text-lg backdrop-blur-sm transition-all duration-300 hover:scale-110 hover:bg-white hover:shadow-lg`}
+    >
+      {added ? (
+        <FaHeart className="text-red-500 transition-transform group-hover/wishlist:scale-110" />
+      ) : (
+        <FaRegHeart className="text-primary-900 transition-transform group-hover/wishlist:scale-110" />
+      )}
+    </div>
   );
 }
 

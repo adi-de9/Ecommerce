@@ -1,6 +1,6 @@
 import React, { lazy, Suspense } from 'react';
 import ReactDOM from 'react-dom/client';
-import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { RouterProvider, createBrowserRouter } from 'react-router';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import { store, persistor } from './app/store.js';
@@ -104,14 +104,14 @@ const appRouter = createBrowserRouter([
     errorElement: <ErrorPage />,
     children: [
       { path: '/dashboard', element: <Dashboard /> },
-      { path: '/dashboard/order', element: <DashboardOrder /> },
-      { path: '/dashboard/product', element: <DashboardProduct /> },
-      { path: '/dashboard/user', element: <DashboardUser /> },
-      { path: '/dashboard/category', element: <DashboardCategory /> },
-      { path: '/dashboard/color', element: <DashboardColor /> },
-      { path: '/dashboard/notification', element: <DashboardNotification /> },
-      { path: '/dashboard/setting', element: <DashboardSetting /> },
-      { path: '/dashboard/payment', element: <DashboardPayment /> },
+      { path: '/dashboard/orders', element: <DashboardOrder /> },
+      { path: '/dashboard/products', element: <DashboardProduct /> },
+      { path: '/dashboard/users', element: <DashboardUser /> },
+      { path: '/dashboard/categorys', element: <DashboardCategory /> },
+      { path: '/dashboard/colors', element: <DashboardColor /> },
+      { path: '/dashboard/notifications', element: <DashboardNotification /> },
+      { path: '/dashboard/settings', element: <DashboardSetting /> },
+      { path: '/dashboard/payments', element: <DashboardPayment /> },
     ],
   },
 ]);

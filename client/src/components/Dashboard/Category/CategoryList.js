@@ -10,7 +10,7 @@ function CategoryList() {
 
   useEffect(() => {
     dispatch(getAllCategory());
-  }, []);
+  }, [category]);
 
   return (
     <>

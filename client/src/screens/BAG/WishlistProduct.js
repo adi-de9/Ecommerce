@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import AddToBag from './AddToBag';
 import {
   getWishListProducts,

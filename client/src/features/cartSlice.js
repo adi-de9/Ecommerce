@@ -1,6 +1,6 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
-const BASE_URL = process.env.BASEURL;
+const BASE_URL = import.meta.env.VITE_BASEURL;
 
 export const getCartProducts = createAsyncThunk(
   'cart/getCartProducts',
@@ -22,16 +22,19 @@ export const addToCart = createAsyncThunk(
   'cart/addToCart',
   async ({ productId, quantity, size }, { rejectWithValue }) => {
     try {
+      console.log('addToCart',productId, quantity, size);
       const response = await axios.put(
         `${BASE_URL}/cart/addorupdatetocart`,
-        { productId, quantity, size },
+        { productId, quantity, size, isAddition: true },
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,
         }
       );
+      
       return response.data;
     } catch (error) {
+      console.log(error);
       const message = error.response?.data?.message || error.message;
       return rejectWithValue(message);
     }
@@ -44,7 +47,7 @@ export const updateToCart = createAsyncThunk(
     try {
       const response = await axios.put(
         `${BASE_URL}/cart/addorupdatetocart`,
-        { productId, quantity, size },
+        { productId, quantity, size, isAddition: false },
         {
           headers: { 'Content-Type': 'application/json' },
           withCredentials: true,

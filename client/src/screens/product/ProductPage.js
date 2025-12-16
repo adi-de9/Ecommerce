@@ -6,12 +6,14 @@ import { getAllColor } from '../../features/colorSlice';
 import ProductCard from './ProductCards';
 import Pagination from './Pagination';
 import Spinner from '../../components/Spinner';
-import { useSearchParams } from 'react-router-dom';
+import { useSearchParams, Link } from 'react-router';
 import {
   MobileFiltersDialog,
   ProductFilters,
   SortAndViewOptions,
 } from './ProductFilters';
+import { FaHome, FaSearch } from 'react-icons/fa';
+import { HiShoppingBag } from 'react-icons/hi';
 
 function ProductPage() {
   const dispatch = useDispatch();
@@ -45,10 +47,11 @@ function ProductPage() {
       size: size ? size.split(',') : '',
       sortBy: sortBy || '',
     };
-    if (size || categoryId || size || sortBy) {
+    if (size || categoryId || colorId || sortBy) {
       setIsCallFilterData(true);
       dispatch(filterProducts({ filterData }));
     } else {
+      setIsCallFilterData(false);
       dispatch(getAllProducts({ page }));
     }
 
@@ -175,23 +178,18 @@ function ProductPage() {
     });
   };
 
-  const renderProducts = (productList) => (
-    <>
-      {sortProducts(productList).map((product) => (
-        <ProductCard key={product._id} sdata={product} />
-      ))}
-      {totalPages > 1 && (
-        <Pagination
-          currentPage={page}
-          totalPages={totalPages}
-          onPageChange={setPage}
-        />
-      )}
-    </>
-  );
+  // Check for active filters
+  const hasActiveFilters =
+    searchParams.get('size') ||
+    searchParams.get('categoryId') ||
+    searchParams.get('colorId');
+
+  // Get product list and count
+  const displayProducts = isCallFilterData ? filterProduct : products;
+  const productCount = displayProducts?.length || 0;
 
   return (
-    <div className="h-full bg-white">
+    <div className="min-h-screen bg-gradient-to-b from-primary-50/30 to-white">
       <MobileFiltersDialog
         mobileFiltersOpen={mobileFiltersOpen}
         setMobileFiltersOpen={setMobileFiltersOpen}
@@ -199,11 +197,37 @@ function ProductPage() {
         handleSubmit={handleSubmit}
       />
 
-      <main className="mx-auto px-4 sm:px-6 md:max-w-7xl lg:max-w-full lg:px-20">
-        <div className="flex items-baseline justify-between border-b border-gray-200 pb-6 pt-6">
-          <h1 className="text-4xl font-bold tracking-tight text-gray-900">
-            New Arrivals
-          </h1>
+      <main className="mx-auto max-w-7xl px-4 py-8 sm:px-6 lg:px-8">
+        {/* Breadcrumb */}
+        <nav className="mb-6 flex items-center gap-2 text-sm text-gray-600">
+          <Link
+            to="/"
+            className="flex items-center gap-1 transition-colors hover:text-primary-900"
+          >
+            <FaHome className="text-xs" />
+            <span>Home</span>
+          </Link>
+          <span>/</span>
+          <span className="font-medium text-primary-900">All Products</span>
+        </nav>
+
+        {/* Header */}
+        <div className="mb-8 flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">
+          <div>
+            <h1 className="font-display mb-2 text-3xl font-bold tracking-tight text-primary-900 sm:text-4xl lg:text-5xl">
+              All Products
+            </h1>
+            <p className="text-sm text-gray-600 sm:text-base">
+              {loading ? (
+                'Loading products...'
+              ) : (
+                <>
+                  {productCount} {productCount === 1 ? 'product' : 'products'}{' '}
+                  {hasActiveFilters && 'found'}
+                </>
+              )}
+            </p>
+          </div>
 
           <SortAndViewOptions
             handleSortClick={handleSortClick}
@@ -211,35 +235,87 @@ function ProductPage() {
           />
         </div>
 
-        <section aria-labelledby="products-heading" className="pb-16 pt-6">
+        {/* Content */}
+        <section aria-labelledby="products-heading">
           <h2 id="products-heading" className="sr-only">
             Products
           </h2>
-          <div className="flex gap-x-8 gap-y-10 lg:grid-cols-4">
-            {/* Filters */}
+
+          <div className="flex gap-8">
+            {/* Filters Sidebar */}
             <ProductFilters formState={formState} handleSubmit={handleSubmit} />
 
-            {/* Product grid */}
-            <div className="mt-2 flex w-full flex-wrap gap-x-10 gap-y-10">
+            {/* Products Grid */}
+            <div className="flex-1">
               {loading ? (
-                <Spinner />
-              ) : !isCallFilterData ? (
-                products && products.length > 0 ? (
-                  renderProducts(products)
-                ) : (
-                  <div className="mr-24 mt-20">
-                    <h1 className="text-3xl">Products are not available</h1>
+                /* Loading State */
+                <div className="flex min-h-[400px] items-center justify-center">
+                  <div className="text-center">
+                    <Spinner />
+                    <p className="mt-4 text-sm text-gray-600">
+                      Loading products...
+                    </p>
                   </div>
-                )
-              ) : filterProduct && filterProduct.length > 0 ? (
-                sortProducts(filterProduct).map((product) => (
-                  <ProductCard key={product._id} sdata={product} />
-                ))
+                </div>
+              ) : displayProducts && displayProducts.length > 0 ? (
+                /* Products Grid */
+                <>
+                  <div className="grid grid-cols-1 gap-4 sm:grid-cols-2 sm:gap-6 lg:grid-cols-3 lg:gap-8 xl:grid-cols-4">
+                    {sortProducts(displayProducts).map((product, index) => (
+                      <div
+                        key={product._id}
+                        className="animate-fadeIn"
+                        style={{ animationDelay: `${index * 30}ms` }}
+                      >
+                        <ProductCard sdata={product} />
+                      </div>
+                    ))}
+                  </div>
+
+                  {/* Pagination */}
+                  {totalPages > 1 && !isCallFilterData && (
+                    <div className="mt-12 flex justify-center">
+                      <Pagination
+                        currentPage={page}
+                        totalPages={totalPages}
+                        onPageChange={setPage}
+                      />
+                    </div>
+                  )}
+                </>
               ) : (
-                <div className="mr-24 mt-20">
-                  <h1 className="text-3xl">
-                    Filtered products are not available
-                  </h1>
+                /* Empty State */
+                <div className="flex min-h-[60vh] items-center justify-center">
+                  <div className="text-center">
+                    <div className="mb-6 inline-flex h-24 w-24 items-center justify-center rounded-full bg-gradient-to-br from-gray-100 to-gray-200 sm:h-32 sm:w-32">
+                      {hasActiveFilters ? (
+                        <FaSearch className="text-4xl text-gray-400 sm:text-5xl" />
+                      ) : (
+                        <HiShoppingBag className="text-4xl text-gray-400 sm:text-5xl" />
+                      )}
+                    </div>
+                    <h2 className="font-display mb-3 text-2xl font-bold text-gray-900 sm:text-3xl">
+                      {hasActiveFilters
+                        ? 'No Products Found'
+                        : 'No Products Available'}
+                    </h2>
+                    <p className="mb-6 text-base text-gray-600 sm:text-lg">
+                      {hasActiveFilters
+                        ? "Try adjusting your filters to find what you're looking for"
+                        : 'No products are currently available'}
+                    </p>
+                    {hasActiveFilters && (
+                      <button
+                        onClick={() => {
+                          setSearchParams({});
+                          setIsCallFilterData(false);
+                        }}
+                        className="inline-flex items-center gap-2 rounded-full bg-primary-900 px-8 py-3 text-sm font-semibold text-white shadow-lg transition-all hover:bg-primary-800 hover:shadow-xl"
+                      >
+                        Clear All Filters
+                      </button>
+                    )}
+                  </div>
                 </div>
               )}
             </div>
@@ -251,3 +327,4 @@ function ProductPage() {
 }
 
 export default ProductPage;
+

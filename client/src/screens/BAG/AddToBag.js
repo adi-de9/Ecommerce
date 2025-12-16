@@ -3,7 +3,7 @@ import Button from '../../components/Button';
 import { useDispatch, useSelector } from 'react-redux';
 import { addToCart } from '../../features/cartSlice';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import {
   getWishListProducts,
   removeFromWishlist,

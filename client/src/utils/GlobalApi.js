@@ -1,7 +1,7 @@
 import axios from 'axios';
 
 const axiosClient = axios.create({
-  baseURL: process.env.BASEURL,
+  baseURL: import.meta.env.VITE_BASEURL,
 });
 
 const registerUser = async ({ name, username, email, password }) => {

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import GlobalApi from '../../utils/GlobalApi';
 import { toast } from 'react-toastify';
 

@@ -9,29 +9,54 @@ function ProductList() {
   const dispatch = useDispatch();
   const { products, SuccessMsg } = useSelector((state) => state.product);
   const [page, setPage] = useState(1);
+  const [searchTerm, setSearchTerm] = useState('');
+  const [sortOption, setSortOption] = useState('newest');
 
   useEffect(() => {
     dispatch(getAllProducts({ page }));
-  }, [dispatch, page, SuccessMsg]);
+  }, [dispatch, page, SuccessMsg, products]);
+
+  const filteredProducts = products
+    ?.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortOption === 'price-asc') return a.price - b.price;
+      if (sortOption === 'price-desc') return b.price - a.price;
+      if (sortOption === 'name-asc') return a.name.localeCompare(b.name);
+      if (sortOption === 'name-desc') return b.name.localeCompare(a.name);
+      if (sortOption === 'newest')
+        return new Date(b.createdAt) - new Date(a.createdAt);
+      if (sortOption === 'oldest')
+        return new Date(a.createdAt) - new Date(b.createdAt);
+      return 0;
+    });
 
   return (
     <>
       <div className="w-full">
-        <div className="my-2 flex w-full items-center justify-start">
-          <ul className="flex w-full items-center justify-start gap-x-2">
-            <li className="flex h-10 cursor-pointer items-center justify-center rounded-md border border-gray-800 bg-gray-800 px-4 text-white hover:bg-gray-700">
-              All
-            </li>
-            <li className="flex h-10 cursor-pointer items-center justify-center rounded-md border px-4 text-gray-700 hover:bg-gray-200">
-              Pending
-            </li>
-            <li className="flex h-10 cursor-pointer items-center justify-center rounded-md border px-4 text-gray-700 hover:bg-gray-200">
-              Completed
-            </li>
-            <li className="flex h-10 cursor-pointer items-center justify-center rounded-md border px-4 text-gray-700 hover:bg-gray-200">
-              Canceled
-            </li>
-          </ul>
+        <div className="my-2 flex w-full items-center justify-between">
+          <div className="flex items-center gap-x-4">
+            <input
+              type="text"
+              placeholder="Search products..."
+              className="h-10 w-64 rounded-md border border-gray-300 px-3 outline-none focus:border-gray-800"
+              value={searchTerm}
+              onChange={(e) => setSearchTerm(e.target.value)}
+            />
+            <select
+              className="h-10 rounded-md border border-gray-300 px-3 outline-none focus:border-gray-800"
+              value={sortOption}
+              onChange={(e) => setSortOption(e.target.value)}
+            >
+              <option value="newest">Newest</option>
+              <option value="oldest">Oldest</option>
+              <option value="price-asc">Price: Low to High</option>
+              <option value="price-desc">Price: High to Low</option>
+              <option value="name-asc">Name: A-Z</option>
+              <option value="name-desc">Name: Z-A</option>
+            </select>
+          </div>
           <AddButton />
         </div>
         <div className="flex h-12 w-full items-center justify-center rounded-tl-md rounded-tr-md bg-gray-800 text-white">
@@ -43,6 +68,9 @@ function ProductList() {
           </div>
           <div className="flex h-full w-full cursor-pointer items-center justify-start border-r px-2 text-base font-medium hover:underline">
             Name
+          </div>
+          <div className="flex h-full w-36 cursor-pointer items-center justify-start border-r px-2 text-base font-medium hover:underline">
+            Image
           </div>
           <div className="flex h-full w-36 items-center justify-center border-r px-3 text-base font-medium">
             Stock
@@ -61,7 +89,7 @@ function ProductList() {
           </div>
         </div>
         <div className="my-1 flex w-full flex-col items-center justify-center rounded-bl-md rounded-br-md border text-gray-800">
-          {products?.map((item, index) => {
+          {filteredProducts?.map((item, index) => {
             return (
               <ProductListItem
                 key={index}
@@ -70,6 +98,7 @@ function ProductList() {
                 name={item.name}
                 stock={item.stock}
                 price={item.price}
+                image={item.mainImage?.secure_url}
               />
             );
           })}

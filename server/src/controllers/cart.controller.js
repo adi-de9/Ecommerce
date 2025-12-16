@@ -83,19 +83,37 @@ export const fetchUserCart = asyncHandler(async (req, res) => {
 
 // Controller to add or update item in a cart
 export const addOrUpdateCart = asyncHandler(async (req, res) => {
-  const { productId, quantity = 1, size } = req.body;
+  const { productId, quantity = 1, size, isAddition } = req.body;
   console.log(req.body);
 
-  const cart = await Cart.findOne({
+  let cart = await Cart.findOne({
     owner: req.user._id,
   });
+
+  if (!cart) {
+    cart = new Cart({
+      owner: req.user._id,
+      items: [],
+    });
+  }
 
   const product = await Product.findById(productId);
 
   if (!product) {
     throw new ApiError(404, 'Product does not exist');
   }
-  if (quantity > product.stock) {
+  const addedProduct = cart.items?.find(
+    (item) => item.productId.toString() === productId && item.size === size
+  );
+
+  let newQuantity = Number(quantity);
+  if (addedProduct) {
+    if (isAddition) {
+      newQuantity = addedProduct.quantity + Number(quantity);
+    } 
+  }
+
+  if (newQuantity > product.stock) {
     throw new ApiError(
       400,
       product.stock > 0
@@ -104,14 +122,9 @@ export const addOrUpdateCart = asyncHandler(async (req, res) => {
     );
   }
 
-  const addedProduct = cart.items?.find(
-    (item) => item.productId.toString() === productId
-  );
-
   if (addedProduct) {
     // if a product already exist in the cart we're updating it's quantity
-    addedProduct.quantity = quantity;
-    addedProduct.size = size;
+    addedProduct.quantity = newQuantity;
   } else {
     // otherwise we're adding new product
     cart.items.push({

@@ -1,4 +1,4 @@
-import { useRouteError } from 'react-router-dom';
+import { useRouteError } from 'react-router';
 import jpg from '../../assets/404.jpg';
 import '../../assets/styles/error.css';
 

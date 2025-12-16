@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { IoSearch } from 'react-icons/io5';
 import { IoMdClose } from 'react-icons/io';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 import axios from 'axios';
 
 function SearchPage({ handleSearchLeave, mobile }) {
@@ -15,7 +15,7 @@ function SearchPage({ handleSearchLeave, mobile }) {
     if (query.length >= 3) {
       try {
         const response = await axios.get(
-          `${process.env.BASEURL}/search/p/${limit}`,
+          `${import.meta.env.VITE_BASEURL}/search/p/${limit}`,
           {
             params: { q: query },
           }
@@ -38,7 +38,7 @@ function SearchPage({ handleSearchLeave, mobile }) {
       if (query.length >= 3) {
         try {
           const response = await axios.get(
-            `${process.env.BASEURL}/search/p/${limit}`,
+            `${import.meta.env.VITE_BASEURL}/search/p/${limit}`,
             {
               params: { q: query },
             }

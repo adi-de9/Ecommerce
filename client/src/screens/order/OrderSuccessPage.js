@@ -1,7 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import { clearCart } from '../../features/cartSlice';
+
 function OrderSuccessPage() {
   const [count, setCount] = useState(5);
   const dispatch = useDispatch();

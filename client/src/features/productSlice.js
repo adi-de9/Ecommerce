@@ -1,8 +1,8 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = process.env.BASEURL;
-const BASE_URL_PRODUCT = `${process.env.BASEURL}/product`;
+const BASE_URL = import.meta.env.VITE_BASEURL;
+const BASE_URL_PRODUCT = `${import.meta.env.VITE_BASEURL}/product`;
 
 // creating a product
 export const addProduct = createAsyncThunk(

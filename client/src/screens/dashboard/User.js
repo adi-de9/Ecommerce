@@ -1,7 +1,7 @@
 import React from 'react';
 import UserList from '../../components/Dashboard/User/UserList';
 import UserEdit from '../../components/Dashboard/User/UserEdit';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 function User() {
   const location = useLocation();

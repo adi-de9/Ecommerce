@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { RxCross2 } from 'react-icons/rx';
-import { Link } from 'react-router-dom';
+import { Link } from 'react-router';
 import { updateToCart, removeFromCart } from '../../features/cartSlice';
 import { useDispatch } from 'react-redux';
 import { debounce } from '../../components/debounce';

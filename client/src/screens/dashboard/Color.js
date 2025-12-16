@@ -1,7 +1,7 @@
 import React from 'react';
 import ColorList from '../../components/Dashboard/Color/ColorList';
 import ColorEdit from '../../components/Dashboard/Color/ColorEdit';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 function Color() {
   const location = useLocation();

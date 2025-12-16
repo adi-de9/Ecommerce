@@ -1,7 +1,7 @@
 import React from 'react';
 import CategoryList from '../../components/Dashboard/Category/CategoryList';
 import CategoryEdit from '../../components/Dashboard/Category/CategoryEdit';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 function Category() {
   const location = useLocation();

@@ -1,7 +1,7 @@
 import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
 import axios from 'axios';
 
-const BASE_URL = process.env.BASEURL;
+const BASE_URL = import.meta.env.VITE_BASEURL;
 
 export const addPayment = createAsyncThunk(
   'payment/addPayment',

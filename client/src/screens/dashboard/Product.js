@@ -1,7 +1,7 @@
 import React from 'react';
 import ProductList from '../../components/Dashboard/Product/ProductList';
 import ProductEdit from '../../components/Dashboard/Product/ProductEdit';
-import { useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router';
 
 function Product() {
   const location = useLocation();
@@ -9,16 +9,16 @@ function Product() {
   const id = searchParams.get('id');
   const edit = searchParams.get('edit');
   const otherImages = searchParams.get('otherimages');
+console.log(searchParams,id,edit,otherImages);
 
   return (
-    <>
       <div className="h-screen w-full">
         <div className="mb-6">
-          <h1 className="text-3xl font-semibold text-black text-opacity-80">
+          <h1 className="text-3xl font-semibold text-black dark:text-white text-opacity-80">
             {id && !otherImages ? 'Product Edit' : !otherImages && 'Product'}
             {otherImages && 'Product Other Images '}
           </h1>
-          <p className="mt-1 cursor-pointer text-sm font-medium text-black text-opacity-50 underline">
+          <p className="mt-1 cursor-pointer text-sm font-medium text-black dark:text-white text-opacity-50 underline">
             {'> dashboard > product'}
           </p>
         </div>
@@ -31,7 +31,6 @@ function Product() {
           )}
         </div>
       </div>
-    </>
   );
 }
 

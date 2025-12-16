@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import png from '../../../images/favicon.png';
-import { Link } from 'react-router-dom';
-import { useNavigate } from 'react-router-dom';
+import { Link } from 'react-router';
+import { useNavigate } from 'react-router';
 import { toast } from 'react-toastify';
 import { Register, clearError } from '../../features/authSlice.js';
 import { useDispatch, useSelector } from 'react-redux';

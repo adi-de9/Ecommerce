@@ -1,7 +1,6 @@
 import { Fragment } from 'react';
 import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react';
 import { XMarkIcon } from '@heroicons/react/24/outline';
-import { Dialog, Disclosure, Menu, Transition } from '@headlessui/react';
 import {
   ChevronDownIcon,
   FunnelIcon,

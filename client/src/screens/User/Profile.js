@@ -4,7 +4,7 @@ import { MdEdit, MdVerified } from 'react-icons/md';
 import { User } from '../../features/authSlice';
 import { updateAvatar, updateUser } from '../../features/userSlice';
 import { toast } from 'react-toastify';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router';
 
 const Profile = () => {
   const dispatch = useDispatch();

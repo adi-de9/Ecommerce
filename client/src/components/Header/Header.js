@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import logo from '../../../images/favicon.png';
-import { Link, useLocation } from 'react-router-dom';
+import { Link, useLocation } from 'react-router';
 import { IoIosSearch } from 'react-icons/io';
 import { VscAccount } from 'react-icons/vsc';
 import { FaRegHeart } from 'react-icons/fa';
@@ -85,7 +85,7 @@ function Header() {
   return (
     <>
       {/* <Sidemenu /> */}
-      <div className="fixed z-50 flex h-20 w-full items-center gap-x-11 border-b bg-white px-10 text-black sm:justify-between sm:px-2 md:justify-between md:px-5 lg:justify-start">
+      <div className="fixed max-w-[1440px] z-50 flex h-20 w-full items-center gap-x-11 border-b bg-white/90 px-10 text-black sm:justify-between sm:px-2 md:justify-between md:px-5 lg:justify-start mx-auto">
         <div className="flex gap-x-5 lg:hidden">
           {Sidemenu ? (
             <RxCross2 size={30} onClick={() => setSidemenu(!Sidemenu)} />
@@ -172,7 +172,7 @@ function Header() {
             <div className="relative flex w-10 items-center justify-center">
               <div>
                 <FaRegHeart size={22} />
-                <div className="absolute right-[-1] top-[-5] h-4 w-4 rounded-full bg-black text-center text-white">
+                <div className="absolute left-6 top-[-4px] h-4 w-4 rounded-full bg-black text-center text-white">
                   {loadingwishlistitems ? (
                     <p className="animate-spin text-[12px] font-semibold">0</p>
                   ) : (
@@ -194,7 +194,7 @@ function Header() {
             <div className="relative flex w-10 items-center justify-center ">
               <div>
                 <FiShoppingBag size={22} />
-                <div className="absolute right-[4] top-[-5] h-4 w-4 rounded-full bg-black text-center text-white">
+                <div className="absolute left-6 top-[-4px] h-4 w-4 rounded-full bg-black text-center text-white">
                   {isLoading ? (
                     <p className="animate-spin text-[12px] font-semibold">0</p>
                   ) : (
@@ -230,7 +230,7 @@ function Header() {
       </div>
       {openSearch && (
         <SearchPage handleSearchLeave={handleSearchLeave} mobile="true" />
-      )}
+      )}  
     </>
   );
 }

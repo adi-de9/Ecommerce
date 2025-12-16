@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useNavigate } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router';
 import ImagePreview from '../Utils/ImagePreview';
 import { useDispatch, useSelector } from 'react-redux';
 import { toast } from 'react-toastify';
@@ -9,8 +9,8 @@ import {
   getOneProduct,
   updateProduct,
 } from '../../../features/productSlice';
-import { getAllCategory } from '../../../features/categorySlice';
-import { getAllColor } from '../../../features/colorSlice';
+import { getAllCategory, addCategory } from '../../../features/categorySlice';
+import { getAllColor, addColor } from '../../../features/colorSlice';
 
 import { EditorState, convertToRaw, convertFromRaw } from 'draft-js';
 import { Editor } from 'react-draft-wysiwyg';
@@ -38,6 +38,14 @@ function ProductEditDetails({ id, edit }) {
   );
   const { category } = useSelector((state) => state.category);
   const { colors } = useSelector((state) => state.color);
+
+  const [showNewColor, setShowNewColor] = useState(false);
+  const [newColorName, setNewColorName] = useState('');
+  const [newColorHex, setNewColorHex] = useState('#000000');
+
+  const [showNewCategory, setShowNewCategory] = useState(false);
+  const [newCategoryName, setNewCategoryName] = useState('');
+  const [newCategoryImage, setNewCategoryImage] = useState(null);
 
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -189,14 +197,13 @@ function ProductEditDetails({ id, edit }) {
   };
 
   return (
-    <>
       <div>
         <form onSubmit={handleFormSubmit} className="flex flex-col gap-y-10">
           {inputFields.map((field) => (
             <div className="flex flex-col" key={field.id}>
-              <label htmlFor={field.id}>{field.label}</label>
+              <label htmlFor={field.id} className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">{field.label}</label>
               {field.type === 'textarea' ? (
-                <div className="min-h-52 rounded-md border border-gray-400 bg-transparent px-2 py-2">
+                <div className="min-h-52 rounded-md border border-gray-300 bg-white px-2 py-2 dark:border-gray-600 dark:bg-gray-800 dark:text-white">
                   <Editor
                     editorState={editorState}
                     onEditorStateChange={handleEditorChange}
@@ -224,7 +231,7 @@ function ProductEditDetails({ id, edit }) {
                   id={field.id}
                   name={field.name}
                   placeholder={field.placeholder}
-                  className="h-10 rounded-md border border-gray-400 px-2 py-2 text-base"
+                  className="h-10 rounded-md border border-gray-300 bg-white px-2 py-2 text-base text-gray-900 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:border-blue-400"
                   value={productData[field.name] || ''}
                   onChange={handleInputChange}
                 />
@@ -232,32 +239,32 @@ function ProductEditDetails({ id, edit }) {
             </div>
           ))}
           <div className="flex w-full flex-col">
-            <label htmlFor="mainImage">Main Image</label>
+            <label htmlFor="mainImage" className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Main Image</label>
             {!productData.mainImage ? (
               <input
                 type="file"
                 id="mainImage"
                 name="mainImage"
                 placeholder="Product Main Image"
-                className="flex h-10 w-full items-center justify-start rounded-md border border-gray-400 px-2 py-2 text-base"
+                className="flex h-10 w-full items-center justify-start rounded-md border border-gray-300 bg-white px-2 py-2 text-base text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
                 onChange={handleInputChange}
               />
             ) : (
-              <div className="flex h-10 w-full items-center justify-center rounded-md px-2 ">
-                <h1 className="w-full">
+              <div className="flex h-10 w-full items-center justify-center rounded-md bg-gray-50 px-2 dark:bg-gray-800">
+                <h1 className="w-full text-gray-900 dark:text-white">
                   {productData.mainImage.public_id
                     ? productData.mainImage.public_id
                     : productData.mainImageName}
                 </h1>
                 <div
                   onClick={handleClearImage}
-                  className="mx-3 flex h-full w-20 cursor-pointer items-center justify-center rounded-md border border-gray-400 hover:bg-gray-200"
+                  className="mx-3 flex h-full w-20 cursor-pointer items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-200 dark:hover:bg-gray-600"
                 >
                   Clear
                 </div>
                 <div
                   onClick={() => setIsPreviewVisible(true)}
-                  className="flex h-full w-20 cursor-pointer items-center justify-center rounded-md border-gray-400 bg-gray-800 text-white hover:bg-gray-700"
+                  className="flex h-full w-20 cursor-pointer items-center justify-center rounded-md bg-gray-800 text-white hover:bg-gray-700 dark:bg-blue-600 dark:hover:bg-blue-700"
                 >
                   View
                 </div>
@@ -276,11 +283,11 @@ function ProductEditDetails({ id, edit }) {
           </div>
           <div className="flex items-center justify-center gap-x-3">
             <div className="flex w-1/2 flex-col">
-              <label htmlFor="category">Category</label>
+              <label htmlFor="category" className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Category</label>
               <select
                 id="category"
                 name="category"
-                className="h-10 rounded-md border border-gray-400 bg-transparent px-2 py-2 text-base"
+                className="h-10 rounded-md border border-gray-300 bg-white px-2 py-2 text-base text-gray-900 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:border-blue-400"
                 value={productData.category}
                 onChange={handleInputChange}
               >
@@ -293,13 +300,90 @@ function ProductEditDetails({ id, edit }) {
                   </option>
                 ))}
               </select>
+              <div className="mt-2 flex items-center gap-2">
+                {!showNewCategory ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowNewCategory(true)}
+                    className="rounded-md bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                  >
+                    + Add category
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      placeholder="New category name"
+                      value={newCategoryName}
+                      onChange={(e) => setNewCategoryName(e.target.value)}
+                      className="h-8 rounded-md border border-gray-300 bg-white px-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                    />
+                    <input
+                      type="file"
+                      id="categoryImage"
+                      className="hidden"
+                      onChange={(e) => {
+                        if (e.target.files && e.target.files[0]) {
+                          setNewCategoryImage(e.target.files[0]);
+                        }
+                      }}
+                    />
+                    <label
+                      htmlFor="categoryImage"
+                      className="flex h-8 cursor-pointer items-center justify-center rounded-md border border-gray-300 bg-white px-2 text-sm text-gray-700 hover:bg-gray-50 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                    >
+                      {newCategoryImage ? 'Image Selected' : 'Choose Image'}
+                    </label>
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (!newCategoryName.trim()) {
+                          toast.error('Enter a category name');
+                          return;
+                        }
+                        const formData = new FormData();
+                        formData.append('name', newCategoryName.trim());
+                        if (newCategoryImage) {
+                          formData.append('image', newCategoryImage);
+                        }
+
+                        try {
+                          await dispatch(addCategory({ categoryData: formData }));
+                          await dispatch(getAllCategory());
+                          toast.success('Category added');
+                          setNewCategoryName('');
+                          setNewCategoryImage(null);
+                          setShowNewCategory(false);
+                        } catch (err) {
+                          toast.error('Failed to add category');
+                        }
+                      }}
+                      className="rounded-md bg-green-500 px-3 py-1 text-sm text-white shadow-sm hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowNewCategory(false);
+                        setNewCategoryName('');
+                        setNewCategoryImage(null);
+                      }}
+                      className="rounded-md bg-gray-100 px-2 py-1 text-sm text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
+            {/* Color Choose */}
             <div className="flex w-1/2 flex-col">
-              <label htmlFor="color">Color</label>
+              <label htmlFor="color" className="mb-2 text-sm font-medium text-gray-700 dark:text-gray-300">Color</label>
               <select
                 id="color"
                 name="color"
-                className="h-10 rounded-md border border-gray-400 bg-transparent px-2 py-2 text-base"
+                className="h-10 rounded-md border border-gray-300 bg-white px-2 py-2 text-base text-gray-900 transition-colors focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500 dark:border-gray-600 dark:bg-gray-800 dark:text-white dark:focus:border-blue-400"
                 value={productData.color}
                 onChange={handleInputChange}
               >
@@ -313,27 +397,100 @@ function ProductEditDetails({ id, edit }) {
                     </option>
                   ))}
               </select>
+              <div className="mt-2 flex items-center gap-2">
+                {!showNewColor ? (
+                  <button
+                    type="button"
+                    onClick={() => setShowNewColor(true)}
+                    className="rounded-md bg-gray-200 px-3 py-1 text-sm text-gray-700 hover:bg-gray-300 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                  >
+                    + Add color
+                  </button>
+                ) : (
+                  <div className="flex items-center gap-2">
+                    <input
+                      type="text"
+                      placeholder="New color name"
+                      value={newColorName}
+                      onChange={(e) => setNewColorName(e.target.value)}
+                      className="h-8 rounded-md border border-gray-300 bg-white px-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                    />
+                    <input
+                      type="color"
+                      value={newColorHex}
+                      onChange={(e) => setNewColorHex(e.target.value)}
+                      className="h-8 w-10 cursor-pointer rounded-md border border-gray-300 p-0 text-sm dark:border-gray-600"
+                    />
+                    <input
+                      type="text"
+                      placeholder="#000000"
+                      value={newColorHex}
+                      onChange={(e) => setNewColorHex(e.target.value)}
+                      className="h-8 w-24 rounded-md border border-gray-300 bg-white px-2 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-800 dark:text-white"
+                    />
+                    <button
+                      type="button"
+                      onClick={async () => {
+                        if (!newColorName.trim()) {
+                          toast.error('Enter a color name');
+                          return;
+                        }
+                        const colorData = {
+                          name: newColorName.trim(),
+                          hexCode: newColorHex,
+                        };
+                        try {
+                          await dispatch(addColor({ colorData }));
+                          await dispatch(getAllColor());
+                          toast.success('Color added');
+                          setNewColorName('');
+                          setNewColorHex('#000000');
+                          setShowNewColor(false);
+                        } catch (err) {
+                          toast.error('Failed to add color');
+                        }
+                      }}
+                      className="rounded-md bg-green-500 px-3 py-1 text-sm text-white shadow-sm hover:bg-green-600 dark:bg-green-600 dark:hover:bg-green-700"
+                    >
+                      Save
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setShowNewColor(false);
+                        setNewColorName('');
+                        setNewColorHex('#000000');
+                      }}
+                      className="rounded-md bg-gray-100 px-2 py-1 text-sm text-gray-700 hover:bg-gray-200 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600"
+                    >
+                      Cancel
+                    </button>
+                  </div>
+                )}
+              </div>
             </div>
           </div>
+
+          {/* buttons */}
           <div className="my-5 flex items-center justify-start gap-x-3">
-            <div className="flex h-10 w-36 cursor-pointer items-center justify-center rounded-md border border-gray-400 hover:bg-gray-200">
+            <div className="flex h-10 w-36 cursor-pointer items-center justify-center rounded-md border border-gray-300 bg-white text-gray-700 hover:bg-gray-100 dark:border-gray-600 dark:bg-gray-700 dark:text-gray-300 dark:hover:bg-gray-600">
               <Link
                 to="./"
-                className="flex h-full w-full items-center justify-center"
+                className="flex h-full w-full items-center justify-center text-gray-700 dark:text-gray-300"
               >
                 Cancel
               </Link>
             </div>
             <button
               type="submit"
-              className="flex h-10 w-36 cursor-pointer items-center justify-center rounded-md border border-gray-800 bg-gray-800 text-white hover:border-gray-700 hover:bg-gray-700"
+              className="flex h-10 w-36 cursor-pointer items-center justify-center rounded-md border border-gray-800 bg-gray-800 text-white shadow-md transition-all hover:border-gray-700 hover:bg-gray-700 dark:border-blue-600 dark:bg-blue-600 dark:hover:border-blue-700 dark:hover:bg-blue-700"
             >
               {edit ? 'Publish' : 'Edit'}
             </button>
           </div>
         </form>
       </div>
-    </>
+
   );
 }
 
