@@ -13,7 +13,8 @@ import ImagePreview from '../Utils/ImagePreview';
 function ProductListItem({ id, index, name, stock, price, image }) {
   const [isSettingDialog, setIsSettingDialog] = useState(false);
   const [isPreviewVisible, setIsPreviewVisible] = useState(false);
-  const { loading, SuccessMsg } = useSelector((state) => state.product);
+  const {  SuccessMsg } = useSelector((state) => state.product);
+  const [loading, setLoading] = useState(false);
   const discpatch = useDispatch();
 
   const handleSettingClick = () => {
@@ -21,15 +22,17 @@ function ProductListItem({ id, index, name, stock, price, image }) {
   };
 
   const handleDelete = () => {
+    setLoading(true);
     discpatch(removeProduct({ id }));
     if (SuccessMsg) {
       toast.success(SuccessMsg);
     }
+    setLoading(false);
   };
 
   return (
     <>
-      <div className="flex h-12 w-full items-center justify-center border-b text-gray-800">
+      <div className="flex h-12 w-full items-center justify-center border-b text-gray-800 dark:text-gray-100">
         <div className="flex h-full w-10 items-center justify-center border-r px-3">
           <input className="cursor-pointer" type="checkbox" />
         </div>

@@ -10,10 +10,9 @@ function CategoryList() {
 
   useEffect(() => {
     dispatch(getAllCategory());
-  }, [category]);
+  }, []);
 
   return (
-    <>
       <div className="w-full">
         <div className="my-2 flex w-full items-center justify-start">
           <ul className="flex w-full items-center justify-start gap-x-2">
@@ -58,7 +57,7 @@ function CategoryList() {
           })}
         </div>
       </div>
-    </>
+ 
   );
 }
 

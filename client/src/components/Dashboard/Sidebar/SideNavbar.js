@@ -16,14 +16,14 @@ function SideNavbar({ onLinkClick }) {
 
   const navtext = [
     { text: 'Dashboard', link: './', icon: FaTachometerAlt },
-    { text: 'Orders', link: './order', icon: FaShoppingCart },
+    { text: 'Orders', link: './orders', icon: FaShoppingCart },
     { text: 'Products', link: './products', icon: FaBox },
-    { text: 'Category', link: './category', icon: FaLayerGroup },
-    { text: 'Colors', link: './color', icon: FaPalette },
-    { text: 'Users', link: './user', icon: FaUsers },
-    { text: 'Payments', link: './payment', icon: FaMoneyBillWave },
-    { text: 'Notification', link: './notification', icon: FaBell },
-    { text: 'Settings', link: './setting', icon: FaCog },
+    { text: 'Category', link: './categorys', icon: FaLayerGroup },
+    { text: 'Colors', link: './colors', icon: FaPalette },
+    { text: 'Users', link: './users', icon: FaUsers },
+    { text: 'Payments', link: './payments', icon: FaMoneyBillWave },
+    { text: 'Notification', link: './notifications', icon: FaBell },
+    { text: 'Settings', link: './settings', icon: FaCog },
   ];
 
   const isActive = (link) => {

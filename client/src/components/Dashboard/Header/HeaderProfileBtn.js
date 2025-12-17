@@ -54,7 +54,7 @@ function HeaderProfileBtn({ username }) {
           </div>
           <div className="flex h-10 items-center justify-center border-b px-3 hover:bg-gray-200">
             <Link
-              to="./setting"
+              to="./settings"
               className="flex h-full w-full items-center justify-start"
             >
               Settings

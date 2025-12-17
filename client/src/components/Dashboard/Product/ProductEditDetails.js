@@ -251,6 +251,13 @@ function ProductEditDetails({ id, edit }) {
               />
             ) : (
               <div className="flex h-10 w-full items-center justify-center rounded-md bg-gray-50 px-2 dark:bg-gray-800">
+                {(productData.mainImage?.secure_url || imagePreview) && (
+                  <img
+                    src={productData.mainImage?.secure_url || imagePreview}
+                    alt="Thumbnail"
+                    className="mr-2 h-8 w-8 rounded object-cover"
+                  />
+                )}
                 <h1 className="w-full text-gray-900 dark:text-white">
                   {productData.mainImage.public_id
                     ? productData.mainImage.public_id
@@ -334,6 +341,13 @@ function ProductEditDetails({ id, edit }) {
                     >
                       {newCategoryImage ? 'Image Selected' : 'Choose Image'}
                     </label>
+                    {newCategoryImage && (
+                      <img
+                        src={URL.createObjectURL(newCategoryImage)}
+                        alt="Preview"
+                        className="h-8 w-8 rounded object-cover"
+                      />
+                    )}
                     <button
                       type="button"
                       onClick={async () => {

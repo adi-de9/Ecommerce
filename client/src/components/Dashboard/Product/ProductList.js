@@ -14,7 +14,7 @@ function ProductList() {
 
   useEffect(() => {
     dispatch(getAllProducts({ page }));
-  }, [dispatch, page, SuccessMsg, products]);
+  }, [dispatch, page, SuccessMsg]);
 
   const filteredProducts = products
     ?.filter((product) =>
@@ -88,7 +88,7 @@ function ProductList() {
             Delete
           </div>
         </div>
-        <div className="my-1 flex w-full flex-col items-center justify-center rounded-bl-md rounded-br-md border text-gray-800">
+        <div className="my-1 flex w-full flex-col items-center justify-center rounded-bl-md rounded-br-md border text-gray-800 dark:text-gray-100">
           {filteredProducts?.map((item, index) => {
             return (
               <ProductListItem
