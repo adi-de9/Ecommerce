@@ -337,7 +337,7 @@ const Body = () => {
               ))}
             </div>
 
-            <div ref={categoryBtnRef} className="mt-14 flex justify-center">
+            <div ref={categoryBtnRef} className="mt-24 flex justify-center">
               <Button
                 title="View All Categories"
                 bgColor="transparent"
